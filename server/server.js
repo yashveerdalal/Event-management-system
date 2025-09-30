@@ -8,22 +8,28 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 
 dotenv.config();
 
+// Connect to Database
 connectDB();
 
 const app = express();
 
-// --- START: Robust CORS Configuration ---
+// --- START: Universal CORS Configuration for Development (FINAL FIX) ---
+// WARNING: This allows ALL domains to access your API.
+// This is necessary because Vercel preview URLs change frequently.
+// If you move to a stable production domain, revert 'origin' to process.env.FRONTEND_URL.
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  // SETTING ORIGIN TO '*' FIXES THE FINAL "ORIGIN IS NOT ALLOWED" ERROR.
+  origin: "*", 
   optionsSuccessStatus: 200,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
 };
 
-// This line explicitly handles the browser's security check (the OPTIONS request)
-// that was causing the 404 preflight error.
-app.options("*", cors(corsOptions));
-
+// Handle CORS preflight requests
+app.options("*", cors(corsOptions)); 
+// Apply CORS to all requests
 app.use(cors(corsOptions));
-// --- END: Robust CORS Configuration ---
+// --- END: Universal CORS Configuration for Development ---
 
 app.use(express.json());
 
