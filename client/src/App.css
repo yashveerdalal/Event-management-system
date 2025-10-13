@@ -510,3 +510,26 @@ main {
     transform: rotate(360deg);
   }
 }
+/* Add this to your App.css file */
+
+.modal-header {
+  position: relative;
+  /* ... other styles if any ... */
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #888;
+  padding: 0;
+}
+
+.modal-close-button:hover {
+  color: #333;
+}
