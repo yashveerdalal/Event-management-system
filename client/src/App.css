@@ -9,23 +9,25 @@
   padding: 0;
 }
 
-/* --- 2. ROOT VARIABLES ("UNIVERSITY BLUE" THEME) --- */
+/* --- 2. ROOT VARIABLES (PREMIUM MONOCHROME THEME) --- */
 :root {
   --font-family: "Poppins", sans-serif;
-  --bg-dark: #0f172a; /* Deep midnight blue for the main background */
-  --bg-light: #1e293b; /* Lighter slate for cards, modals */
-  --bg-accent: #334155; /* Accent slate for borders, dividers */
-  --primary-color: #22d3ee; /* Vibrant Cyan for primary actions */
-  --primary-hover: #67e8f9; /* Lighter cyan for hover */
-  --accent-color: #f97316; /* Bright Orange for secondary accents */
-  --text-primary: #f8fafc; /* Almost white for primary text */
-  --text-secondary: #94a3b8; /* Lighter grey for secondary text */
-  --success-color: #22c55e;
-  --danger-color: #ef4444;
+
+  /* --- New Premium Monochrome Palette --- */
+  --bg-dark: #121212; /* Deep, rich black for the main background */
+  --bg-light: #1e1e1e; /* Slightly lighter black for cards, modals */
+  --bg-accent: #2e2e2e; /* Mid-grey for borders, dividers */
+  --primary-color: #ffffff; /* Pure white for primary actions and highlights */
+  --primary-hover: #e0e0e0; /* Off-white for hover states */
+  --text-primary: #f5f5f5; /* Soft white for primary text, easy on the eyes */
+  --text-secondary: #aaaaaa; /* Light grey for secondary text and meta info */
+  --success-color: #4caf50; /* A tasteful, muted green */
+  --danger-color: #e53935; /* A strong, clear red */
+
+  /* --- UI Elements --- */
   --border-radius: 0.5rem;
-  --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4),
-    0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.7);
   --transition-speed: 0.3s;
 }
 
@@ -61,7 +63,7 @@ main {
   font-weight: 700;
   text-align: center;
   margin-bottom: 1rem;
-  color: var(--primary-color);
+  color: var(--text-primary);
   letter-spacing: 1px;
 }
 .page-subtitle {
@@ -96,7 +98,7 @@ main {
   text-decoration: none;
   transition: all var(--transition-speed) ease;
   background-color: var(--primary-color);
-  color: var(--bg-dark);
+  color: var(--bg-dark); /* Dark text on white button */
   box-shadow: var(--shadow-sm);
 }
 .button:hover {
@@ -109,20 +111,20 @@ main {
   opacity: 0.6;
 }
 .button-secondary {
-  background-color: var(--bg-accent);
+  background-color: transparent;
   color: var(--text-primary);
   border: 2px solid var(--bg-accent);
 }
 .button-secondary:hover {
-  background-color: var(--bg-light);
-  border-color: var(--primary-color);
+  background-color: var(--bg-accent);
+  border-color: var(--bg-accent);
 }
 .button-danger {
   background-color: var(--danger-color);
   color: var(--text-primary);
 }
 .button-danger:hover {
-  background-color: #b91c1c;
+  background-color: #c62828;
 }
 .button-success {
   background-color: var(--success-color);
@@ -136,7 +138,7 @@ main {
 
 /* Navbar */
 .navbar {
-  background-color: rgba(15, 23, 42, 0.8);
+  background-color: rgba(18, 18, 18, 0.8); /* Darker transparent bg */
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-sm);
   border-bottom: 1px solid var(--bg-accent);
@@ -179,7 +181,7 @@ main {
   background: linear-gradient(
     to top,
     var(--bg-dark) 0%,
-    rgba(15, 23, 42, 0) 50%
+    rgba(18, 18, 18, 0) 50%
   );
 }
 .slide {
@@ -190,6 +192,7 @@ main {
   opacity: 0;
   transition: opacity 1.5s ease-in-out;
   transform: scale(1.05);
+  filter: grayscale(80%); /* Desaturated images for premium look */
 }
 .slide.active {
   opacity: 1;
@@ -226,7 +229,7 @@ main {
 }
 .event-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
   border-color: var(--primary-color);
 }
 .event-card-image-wrapper {
@@ -238,10 +241,13 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-speed) ease;
+  transition: transform var(--transition-speed) ease,
+    filter var(--transition-speed) ease;
+  filter: grayscale(80%);
 }
 .event-card:hover .event-card-image {
   transform: scale(1.05);
+  filter: grayscale(0%);
 }
 .event-card-body {
   padding: 1.5rem;
@@ -280,6 +286,7 @@ main {
   height: 40vh;
   max-height: 450px;
   object-fit: cover;
+  filter: grayscale(50%);
 }
 .event-detail-body {
   padding: clamp(1.5rem, 5vw, 3rem);
@@ -288,9 +295,7 @@ main {
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary); /* Removed gradient for clean monochrome look */
 }
 .event-detail-meta {
   display: flex;
@@ -335,7 +340,7 @@ main {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.7);
+  background-color: rgba(18, 18, 18, 0.7);
   backdrop-filter: blur(8px);
   z-index: 100;
   display: flex;
@@ -357,7 +362,7 @@ main {
 .modal-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--text-primary);
 }
 .modal-body {
   padding: 1.5rem;
@@ -384,7 +389,7 @@ main {
 .form-textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 .auth-form-switch {
   text-align: center;
@@ -424,7 +429,7 @@ main {
 }
 .star-rating button:hover .star,
 .star-rating button.on .star {
-  color: #facc15;
+  color: var(--primary-color); /* Stars are now white */
   transform: scale(1.2) rotate(10deg);
 }
 .reviews-list {
@@ -437,7 +442,7 @@ main {
   background: var(--bg-dark);
   padding: 1rem;
   border-radius: var(--border-radius);
-  border-left: 3px solid var(--accent-color);
+  border-left: 3px solid var(--primary-color); /* White accent border */
 }
 .review-item p {
   font-style: italic;
@@ -511,10 +516,8 @@ main {
   }
 }
 
-
 .modal-header {
   position: relative;
-
 }
 
 .modal-close-button {
@@ -526,10 +529,11 @@ main {
   font-size: 1.8rem;
   line-height: 1;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
   padding: 0;
+  transition: color var(--transition-speed);
 }
 
 .modal-close-button:hover {
-  color: #333;
+  color: var(--text-primary);
 }
