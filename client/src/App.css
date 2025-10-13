@@ -385,9 +385,11 @@ main {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
+/* ✅ FIX: Added Leaderboard form and spacing to all form buttons */
 .auth-form .button,
 .create-event-form .button,
-.review-form .button {
+.review-form .button,
+.leaderboard-form .button {
   margin-top: 1rem;
 }
 
