@@ -74,10 +74,16 @@ const useAuth = () => useContext(AuthContext);
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    // ✅ FIX: The overlay can now be clicked to close the modal.
+    <div className="modal-overlay" onClick={onClose}>
+      {/* e.stopPropagation() prevents the modal from closing when you click inside it. */}
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3 className="modal-title">{title}</h3>
+          {/* ✅ FIX: Added a dedicated close button. */}
+          <button onClick={onClose} className="modal-close-button">
+            &times; {/* This is the 'X' symbol */}
+          </button>
         </div>
         <div className="modal-body">{children}</div>
       </div>
@@ -188,16 +194,11 @@ const AuthModal = ({ isOpen, onClose }) => {
     setLoading(true);
     setError("");
     try {
-      // ✅ API Path Fix: Uses the correct /api prefix
       const endpoint = isLoginView ? "/api/auth/login" : "/api/auth/register";
-
       const payload = isLoginView
         ? { email, password }
         : { name, email, password };
-
       const { data } = await api.post(endpoint, payload);
-
-      // Pass the necessary user data to the login context
       login(data.token, data);
       onClose();
     } catch (err) {
@@ -249,8 +250,7 @@ const AuthModal = ({ isOpen, onClose }) => {
         <p className="auth-form-switch">
           {isLoginView ? "Don't have an account?" : "Already have an account?"}
           <button type="button" onClick={() => setIsLoginView(!isLoginView)}>
-            {/* ✅ LOGIC FIX: Text shows the action the button will perform (switch to register, or switch to login) */}
-            {isLoginView ? "Register" : "Login"} 
+            {isLoginView ? "Register" : "Login"}
           </button>
         </p>
       </form>
@@ -272,7 +272,6 @@ const CreateEventModal = ({ isOpen, onClose }) => {
     setLoading(true);
     setError("");
     try {
-      // ✅ API Path Fix: Uses the correct /api prefix
       await api.post("/api/events", {
         title,
         description,
@@ -280,7 +279,6 @@ const CreateEventModal = ({ isOpen, onClose }) => {
         location,
         image,
       });
-
       onClose();
       window.location.reload();
     } catch (err) {
@@ -398,7 +396,6 @@ const EventListPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        // ✅ API Path Fix: Uses the correct /api prefix
         const { data } = await api.get("/api/events");
         setEvents(data);
       } catch (error) {
@@ -447,7 +444,6 @@ const EventDetailPage = () => {
   const fetchEvent = async () => {
     try {
       setLoading(true);
-      // ✅ API Path Fix: Uses the correct /api prefix
       const { data } = await api.get(`/api/events/${id}`);
       setEvent(data);
     } catch (error) {
@@ -465,7 +461,6 @@ const EventDetailPage = () => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
-        // ✅ API Path Fix: Uses the correct /api prefix
         await api.delete(`/api/events/${id}`);
         navigate("/");
       } catch (error) {
@@ -477,7 +472,6 @@ const EventDetailPage = () => {
   const handleRegister = async () => {
     setRegistrationStatus("registering");
     try {
-      // ✅ API Path Fix: Uses the correct /api prefix
       await api.post(`/api/events/${id}/register`);
       setRegistrationStatus("registered");
       setTimeout(() => {
@@ -589,7 +583,6 @@ const ReviewSection = ({ eventId }) => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      // ✅ API Path Fix: Uses the correct /api prefix
       const { data } = await api.get(`/api/reviews/${eventId}`);
       setReviews(data);
     } catch (error) {
@@ -610,7 +603,6 @@ const ReviewSection = ({ eventId }) => {
       return;
     }
     try {
-      // ✅ API Path Fix: Uses the correct /api prefix
       await api.post(`/api/reviews/${eventId}`, { comment, rating });
       setComment("");
       setRating(0);
@@ -686,7 +678,6 @@ const LeaderboardSection = ({ event, setEvent }) => {
   const handleAddEntry = async (e) => {
     e.preventDefault();
     try {
-      // ✅ API Path Fix: Uses the correct /api prefix
       const { data } = await api.put(`/api/events/${event._id}`, {
         name,
         score,
@@ -762,4 +753,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
