@@ -694,6 +694,7 @@ const LeaderboardSection = ({ event, setEvent }) => {
     <div className="detail-section">
       <h2 className="section-title">Leaderboard</h2>
       {isOrganizer && (
+        // ✅ FIX: Added className to apply correct button spacing.
         <form onSubmit={handleAddEntry} className="leaderboard-form">
           <Input
             type="text"
